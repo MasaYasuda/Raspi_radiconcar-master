@@ -35,16 +35,49 @@ try:
           
           time.sleep(0.010)
           
-          buffer={0}
+          buffer=[]
           count=0
           
           start_time = time.time()  # 現在時刻を取得
           while time.time() - start_time < 5:
             events = pygame.event.get()
-            input=[j.get_hat(0),j.get_button(1)]
-            if input!={0,0,0}:
+            input=1*j.get_hat(0)[1]+2*(-1)*j.get_hat(0)[0]+3*j.get_button(1)
+            if input!=0:
               time.sleep(0.010)
-              if 
+              if input==3:
+                break
+              else :
+                buffer[count]=input
+                
+                while(1):
+                  events = pygame.event.get()
+                  input=1*j.get_hat(0)[1]+2*(-1)*j.get_hat(0)[0]+3*j.
+                  if input==0:
+                    break
+                time.sleep(0.010)
+                count+=1
+        for i in range (0,len(buffer)):
+          if buffer[i]==1: # 十字上ボタンが押されている場合
+            print("前進")
+            dynamixel_1.write_velocity(128)
+            dynamixel_2.write_velocity(-128)
+          elif buffer[i]==-1: # 十字下ボタンが押されている場合
+              print("後退")
+              dynamixel_1.write_velocity(128)
+              dynamixel_2.write_velocity(-128)
+          elif buffer[i]==2: # 十字右ボタンが押されている場合
+              print("時計回り")
+              dynamixel_1.write_velocity(128)
+              dynamixel_2.write_velocity(128)
+          elif buffer[i]==-2: # 十字左ボタンが押されている場合
+              print("反時計回り")
+              dynamixel_1.write_velocity(-128)
+              dynamixel_2.write_velocity(-128)
+          else: # それ以外のボタンが押されている、あるいは、何も押されていない場合
+              break
+          time.sleep(1)
+
+        time.sleep(0.010) # 処理速度を少し落とす
         
         
         
@@ -58,27 +91,7 @@ try:
         
         # 　十字座標に応じた出力
         
-        if j.get_hat(0)[1] == 1: # 十字上ボタンが押されている場合
-            print("前進")
-            dynamixel_1.write_velocity(128)
-            dynamixel_2.write_velocity(-128)
-        elif j.get_hat(0)[1] == -1: # 十字下ボタンが押されている場合
-            print("後退")
-            dynamixel_1.write_velocity(128)
-            dynamixel_2.write_velocity(-128)
-        elif j.get_hat(0)[0] == 1: # 十字右ボタンが押されている場合
-            print("時計回り")
-            dynamixel_1.write_velocity(128)
-            dynamixel_2.write_velocity(128)
-        elif j.get_hat(0)[0] == 1: # 十字左ボタンが押されている場合
-            print("反時計回り")
-            dynamixel_1.write_velocity(-128)
-            dynamixel_2.write_velocity(-128)
-        else: # それ以外のボタンが押されている、あるいは、何も押されていない場合
-            dynamixel_1.write_velocity(0)
-            dynamixel_2.write_velocity(0)
-
-        time.sleep(0.010) # 処理速度を少し落とす
+        
 
 except KeyboardInterrupt:
     print("プログラムを終了します")
